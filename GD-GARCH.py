@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 # Constants
 ANNUALIZER = np.sqrt(252)
 FORECASTS = 1000
-ticker = 'AAPL'
+ticker = 'TSLA'
 
 # Defining variables of this GARCH implementation
 # SCALE controls the volatility wiggliness, i.e. volatility of volatility
@@ -55,26 +55,54 @@ GARCHsampled = []
 previousSampledVariance = VOLATILITY ** 2
 GARCHsampled.append(VOLATILITY / 100)
 for i in range(FORECASTS):
-
+    
     # Modelling shape to fit (DELTA * Variance) as the mode
-    SHAPE = (DELTA * previousSampledVariance) / SCALE + 1
+    SHAPE = previousSampledVariance / SCALE + 1
     
     # Sampling from gamma distribution
     stochasticVariance = np.random.gamma(shape=SHAPE, scale=SCALE, size=1)[0]
 
     # vanilla GARCH forecast equation
-    newSampledVariance = OMEGA + (ALPHA + BETA) * stochasticVariance
+    newSampledVariance = (OMEGA * DELTA) + (ALPHA + BETA) * stochasticVariance
     previousSampledVariance = newSampledVariance
 
     # Appending stochastic volatility
     GARCHsampled.append(np.sqrt(previousSampledVariance) / 100)
 
+GARCHexperimental = []
+previousSampledVariance = VOLATILITY ** 2
+GARCHexperimental.append(VOLATILITY / 100)
+DELTA = 1
+for i in range(FORECASTS):
+    
+    if i == 200:
+        DELTA = 1.2
+    if i == 500:
+        DELTA = 1.1
+    if i == 700:
+        DELTA = 1
+
+    # Modelling shape to fit (DELTA * Variance) as the mode
+    SHAPE = (previousSampledVariance) / SCALE + 1
+    
+    # Sampling from gamma distribution
+    stochasticVariance = np.random.gamma(shape=SHAPE, scale=SCALE, size=1)[0]
+
+    # vanilla GARCH forecast equation
+    newSampledVariance = (OMEGA * DELTA) + (ALPHA + BETA) * stochasticVariance
+    previousSampledVariance = newSampledVariance
+
+    # Appending stochastic volatility
+    GARCHexperimental.append(np.sqrt(previousSampledVariance) / 100)
+
 # Plotting both values
 GARCHsampled = 100 * np.array(GARCHsampled)
 GARCHforecast = 100 * np.array(GARCHforecast)
+GARCHexperimental = 100 * np.array(GARCHexperimental)
 
 plt.plot(GARCHsampled, label=f"S-GARCH @ {SCALE}", alpha=0.8)
 plt.plot(GARCHforecast, label="GARCH")
+plt.plot(GARCHexperimental, label="Experimental")
 plt.xlabel("Forecasted Days")
 plt.ylabel("Daily Volatility (%)")
 plt.legend()
