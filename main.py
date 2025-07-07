@@ -23,10 +23,10 @@ parser.add_argument('--customreg', type=bool, help="Enter Custom Regimes (true o
 args = parser.parse_args()
 
 # Obtaining stocks Arguments from the user
-ticker = args.ticker #
-train = args.train #
-horizon = args.horizon #
-THETA = args.theta #
+ticker = args.ticker 
+train = args.train 
+horizon = args.horizon 
+THETA = args.theta 
 garchcomp = args.garchcomp
 regimesh = args.reg
 custom = args.customreg

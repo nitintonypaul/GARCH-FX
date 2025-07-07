@@ -1,3 +1,7 @@
+# Copyright (c) 2025 Nitin Tony Paul
+# All rights reserved.
+
+# Importing dependencies
 import numpy as np
 import sys
 
@@ -27,7 +31,7 @@ def regimeswitcher(delta, regimeStates, regimes):
     
     if regimes == None:
         # Regime multiplier values
-        regimes = [0.4, 0.7, 0.8, 0.9, 1.00, 1.1, 1.2, 1.3, 1.6]
+        regimes = [0.3, 0.6, 0.7, 0.8, 1.00, 1.2, 1.3, 1.4, 1.7]
     
     if len(regimeStates) != len(regimes):
         print("Invalid regime input")
@@ -47,8 +51,10 @@ def regimeswitcher(delta, regimeStates, regimes):
 # delta can be tweaked for regime shifting function
 def fxforecast(volatility, nahead, params, theta, reg=False, regimeStates=None, regimes=None):
 
+    # Regime switcher
+    delta = 1 
+
     # Assigning variables and forecast list
-    delta = 1 # Regime switcher
     forecasts = []
     forecasts.append(volatility / 100)
     previousVariance = volatility ** 2

@@ -50,23 +50,54 @@ def realVol(returns, steps):
     # Deleting the first element (0) and returning
     return np.delete(volarr, 0)
 
-# Heston model function to model volatility
-def heston(kappa, theta, v0):
-    
-    # Heston parameters
-    sigma = 0.6
-    T = 2.75          
-    N = 1001       
-    dt = T / N
+# Heston model function to forecast volatility
+def hestonForecast(kappa, theta, v0):
 
-    # Simulate
-    np.random.seed(GLOBAL_SEED)
-    vt = np.zeros(N)
+    # Some predefined constants
+    sigma = 0.6
+    T = 2.75
+    N = 1001
+
+    # Use a modern random number generator
+    rng = np.random.default_rng(GLOBAL_SEED)
+    
+    dt = T / N
+    
+    # Critical value for switching between distributions
+    psi_c = 1.5 
+    
+    # Initialize variance array
+    vt = np.zeros(N + 1)
     vt[0] = v0
 
-    for t in range(1, N):
-        z = np.random.normal()
-        vt[t] = vt[t-1] + kappa * (theta - vt[t-1]) * dt + sigma * np.sqrt(max(vt[t-1], 0)) * np.sqrt(dt) * z
-        vt[t] = max(vt[t], 0)
+    for t in range(1, N + 1):
+        
+        # Calculate moments for the next step's distribution
+        m = theta + (vt[t-1] - theta) * np.exp(-kappa * dt)
+        s2 = (vt[t-1] * sigma**2 * np.exp(-kappa * dt) / kappa * (1 - np.exp(-kappa * dt)) +
+              theta * sigma**2 / (2 * kappa) * (1 - np.exp(-kappa * dt))**2)
+        
+        psi = s2 / m**2
 
+        # Check if we should use the "Quadratic" or "Exponential" part of the scheme
+        if psi <= psi_c:
+            
+            # "Exponential" approximation (more stable for low variance of variance)
+            inv_psi = 1 / psi
+            b2 = 2 * inv_psi - 1 + np.sqrt(2 * inv_psi * (2 * inv_psi - 1))
+            a = m / (1 + b2)
+            z = rng.standard_normal()
+            vt[t] = a * (np.sqrt(b2) + z)**2
+        else:
+            
+            # "Quadratic" approximation (for high variance of variance)
+            p = (psi - 1) / (psi + 1)
+            beta = (1 - p) / m
+            u = rng.uniform()
+            
+            if u <= p:
+                vt[t] = 0.0
+            else:
+                vt[t] = np.log((1 - p) / (1 - u)) / beta
+                
     return np.sqrt(vt)

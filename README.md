@@ -76,6 +76,24 @@ This framework ensures that while GARCH-FX respects the foundational GARCH mecha
 
 ---
 
+## Benchmarks
+
+GARCH-FX was benchmarked against Realized Volatility, vanilla GARCH and Heston.
+
+### 1. Berkshire Hathaway Inc Class B
+
+[BRKB](assets/brkb.png)
+
+### 2. Procter & Gamble Co
+
+[PG](assets/pg.png)
+
+### 3. Coca-Cola Co
+
+[KO](assets/ko.png)
+
+---
+
 ## Note
 
 GARCH-FX is experimental and should not be used for high-stakes production trading. Instead, it serves as a research playground for modeling volatility in a more expressive and intuitive manner.
