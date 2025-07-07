@@ -13,7 +13,7 @@ def garchforecast(volatility, nahead, params):
     previousVariance = volatility ** 2
 
     OMEGA, ALPHA, BETA = params[0], params[1], params[2]
-    for i in range(nahead):
+    for i in range(nahead-1):
 
         # GARCH equation
         newVariance = OMEGA + (ALPHA + BETA) * previousVariance
@@ -54,9 +54,9 @@ def realVol(returns, steps):
 def hestonForecast(kappa, theta, v0):
 
     # Some predefined constants
-    sigma = 0.6
+    sigma = 0.4
     T = 2.75
-    N = 1001
+    N = 1000
 
     # Use a modern random number generator
     rng = np.random.default_rng(GLOBAL_SEED)
@@ -67,10 +67,10 @@ def hestonForecast(kappa, theta, v0):
     psi_c = 1.5 
     
     # Initialize variance array
-    vt = np.zeros(N + 1)
+    vt = np.zeros(N)
     vt[0] = v0
 
-    for t in range(1, N + 1):
+    for t in range(1, N):
         
         # Calculate moments for the next step's distribution
         m = theta + (vt[t-1] - theta) * np.exp(-kappa * dt)

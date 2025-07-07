@@ -82,15 +82,34 @@ GARCH-FX was benchmarked against Realized Volatility, vanilla GARCH and Heston.
 
 ### 1. Berkshire Hathaway Inc Class B
 
-![BRKB](assets/brkb.png)
+```shell
+Enter Ticker: BRK-B
+Enable Regime Shifting (Y/N): y
+RMSE (GARCH-FX to Realized Volatility): 0.24490
+RMSE (Heston to Realized Volatility): 0.26849
+```
+[BRKB](assets/brkb.png)
 
 ### 2. Procter & Gamble Co
 
-![PG](assets/pg.png)
+```shell
+Enter Ticker: PG
+Enable Regime Shifting (Y/N): y
+RMSE (GARCH-FX to Realized Volatility): 0.20961
+RMSE (Heston to Realized Volatility): 0.27516
+```
+
+[PG](assets/pg.png)
 
 ### 3. Coca-Cola Co
 
-![KO](assets/ko.png)
+```shell
+Enter Ticker: KO
+Enable Regime Shifting (Y/N): y
+RMSE (GARCH-FX to Realized Volatility): 0.21125
+RMSE (Heston to Realized Volatility): 0.39119
+```
+[KO](assets/ko.png)
 
 ---
 

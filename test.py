@@ -6,8 +6,8 @@ from libs.garchfx import fxforecast
 
 # Constants
 FORECASTS = 1000
-TICKER = "PG" #input("Enter Ticker: ")
-regime = True #if input("Enable Regime Shifting (Y/N): ").lower() == "y" else False
+TICKER = input("Enter Ticker: ")
+regime = True if input("Enable Regime Shifting (Y/N): ").lower() == "y" else False
 
 # Defining variables of this GARCH implementation
 # SCALE controls the volatility wiggliness, proportional to volatility of volatility
@@ -45,11 +45,18 @@ GARCHforecast = 100 * garchforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS)
 # GARCH-FX stochastic forecasting extension in percentages
 FXforecast = 100 * fxforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS, theta=THETA)
 
+# Root Mean Squared Error
+rmse = np.sqrt(np.mean((FXforecast - realizedVolatility) ** 2))
+print(f"RMSE (GARCH-FX to Realized Volatility): {rmse:.5f}")
+
+rmse = np.sqrt(np.mean((hestonforecast - realizedVolatility) ** 2))
+print(f"RMSE (Heston to Realized Volatility): {rmse:.5f}")
+
 # Plotting Values
 plt.plot(realizedVolatility, label="Realized Volatility", alpha=0.8)
 plt.plot(GARCHforecast, label="GARCH", linewidth=3, alpha=0.8)
 plt.plot(FXforecast, label=f"GARCH-FX (θ = {THETA})")
-plt.plot(hestonforecast, label="Heston (σ = 0.6)", alpha=0.8)
+plt.plot(hestonforecast, label="Heston (σ = 0.4)", alpha=0.8)
 plt.title(f"{TICKER} Daily Volatility Forecasts: Comparison of GARCH, GARCH-FX and Heston Models")
 plt.xlabel("Forecasted Days")
 plt.ylabel("Daily Volatility (%)")

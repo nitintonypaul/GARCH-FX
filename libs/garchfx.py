@@ -61,7 +61,7 @@ def fxforecast(volatility, nahead, params, theta, reg=False, regimeStates=None, 
     OMEGA, ALPHA, BETA = params[0], params[1], params[2]
     np.random.seed(GLOBAL_SEED)
 
-    for i in range(nahead):
+    for i in range(nahead-1):
         
         # Modelling shape to fit variance as the mode
         SHAPE = (previousVariance / theta) + 1
