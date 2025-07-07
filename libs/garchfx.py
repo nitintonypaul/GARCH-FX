@@ -45,9 +45,10 @@ def regimeswitcher(delta, regimeStates, regimes):
 # GARCH-FX forecasting
 # Takes final conditional volatility, forecast horizon, GARCH parameters, delta and theta
 # delta can be tweaked for regime shifting function
-def fxforecast(volatility, nahead, params, delta, theta, reg=False, regimeStates=None, regimes=None):
+def fxforecast(volatility, nahead, params, theta, reg=False, regimeStates=None, regimes=None):
 
-    
+    # Assigning variables and forecast list
+    delta = 1 # Regime switcher
     forecasts = []
     forecasts.append(volatility / 100)
     previousVariance = volatility ** 2
@@ -59,6 +60,8 @@ def fxforecast(volatility, nahead, params, delta, theta, reg=False, regimeStates
         # Modelling shape to fit variance as the mode
         SHAPE = (previousVariance / theta) + 1
 
+        # Regime switching if regime switching is enabled
+        # enabled via `reg` argument
         if reg:
             delta = regimeswitcher(delta, regimeStates, regimes)
         
