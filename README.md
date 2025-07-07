@@ -54,7 +54,7 @@ Where $(k > 1)$
 
 GARCH-FX extends the traditional GARCH forecast by incorporating **stochastic components** and **dynamic regime-switching mechanics**. This allows for non-flatlining, more dynamic volatility paths that better reflect the jagged, uncertain nature of real-world market behavior.
 
-The core of the GARCH-FX forecast integrates regime-aware constant terms and a scaled stochastic component, deviating from the deterministic recursion of traditional GARCH:
+The core of the GARCH-FX forecast injects regime awareness via a multiplier variable and a stochastically driven component (modeled by a Gamma distribution), fundamentally deviating from the deterministic recursion of traditional GARCH:
 
 $$
 \sigma_{t+k}^2 = \omega \cdot R_{S_{t+k}} + (\alpha + \beta) \cdot \bar{\sigma}_{t+k-1}^2
