@@ -82,15 +82,15 @@ GARCH-FX was benchmarked against Realized Volatility, vanilla GARCH and Heston.
 
 ### 1. Berkshire Hathaway Inc Class B
 
-[BRKB](assets/brkb.png)
+![BRKB](assets/brkb.png)
 
 ### 2. Procter & Gamble Co
 
-[PG](assets/pg.png)
+![PG](assets/pg.png)
 
 ### 3. Coca-Cola Co
 
-[KO](assets/ko.png)
+![KO](assets/ko.png)
 
 ---
 
