@@ -57,7 +57,7 @@ GARCH-FX extends the traditional GARCH forecast by incorporating **stochastic co
 The core of the GARCH-FX forecast injects regime awareness via a multiplier variable and a stochastically driven component (modeled by a Gamma distribution), fundamentally deviating from the deterministic recursion of traditional GARCH:
 
 $$
-\sigma_{t+k}^2 = \omega \cdot R_{S_{t+k}} + (\alpha + \beta) \cdot \bar{\sigma}_{t+k-1}^2
+\sigma_{t+k}^2 = \omega \cdot \Delta_{S_{t+k}} + (\alpha + \beta) \cdot \bar{\sigma}_{t+k-1}^2
 $$
 
 Where:
@@ -68,7 +68,7 @@ $$
 
 * $\sigma_{t+k}^2$: GARCH-FX forecasted conditional variance $k$ periods into the future. 
 * $\omega$, $\alpha$, $\beta$: Parameters inherited from the underlying GARCH(1,1) model.
-* $R_{S_t}$: A **regime multiplier** at time $t+k$, capturing discrete shifts in volatility levels.
+* $\Delta_{S_{t+k}}$: A **regime multiplier** at time $t+k$, capturing discrete shifts in volatility levels.
 * $\bar{\sigma}_{t+k-1}^2$: A **stochastic variance** at time $t+k$ derived from a Gamma distribution.
 * $\theta_t$: The **scale** of the Gamma distribution that also influences the "volatility of volatility".
 
