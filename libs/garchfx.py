@@ -8,14 +8,32 @@ def regimeswitcher(delta, regimeStates, regimes):
     
     # Basic static Markov chain of probabilities per regime
     if regimeStates == None:
-        regimeStates = np.array([[0.88, 0.10, 0.02], [0.06, 0.89, 0.05], [0.02, 0.33, 0.65]])
+        
+        # 3 stage regime probabilities
+        # regimeStates = np.array([[0.97, 0.029, 0.001], [0.015, 0.95, 0.035], [0.00, 0.04, 0.96]])
+
+        # 9 stage regime probabilities (DEFAULT)
+        regimeStates = np.array([
+            [0.985, 0.015, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000], 
+            [0.015, 0.965, 0.020, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000], 
+            [0.000, 0.015, 0.960, 0.025, 0.000, 0.000, 0.000, 0.000, 0.000], 
+            [0.000, 0.000, 0.020, 0.950, 0.030, 0.000, 0.000, 0.000, 0.000], 
+            [0.000, 0.000, 0.000, 0.020, 0.945, 0.035, 0.000, 0.000, 0.000], 
+            [0.000, 0.000, 0.000, 0.000, 0.025, 0.935, 0.040, 0.000, 0.000], 
+            [0.000, 0.000, 0.000, 0.000, 0.000, 0.030, 0.925, 0.045, 0.000], 
+            [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.035, 0.950, 0.015], 
+            [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.020, 0.980]
+        ])
+    
     if regimes == None:
-        regimes = [0.7, 1, 1.3]
+        # Regime multiplier values
+        regimes = [0.4, 0.7, 0.8, 0.9, 1.00, 1.1, 1.2, 1.3, 1.6]
     
     if len(regimeStates) != len(regimes):
         print("Invalid regime input")
         sys.exit(0)
     currentRegime = regimes.index(delta)
+
     # Generating random number for a chance to switch regimes
     r = np.random.rand()
     probs = regimeStates[currentRegime]

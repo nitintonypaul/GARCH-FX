@@ -1,6 +1,7 @@
 import numpy as np
 from arch import arch_model
 
+# Global seed for fair comparison
 GLOBAL_SEED = None
 
 # Normal GARCH forecasting

@@ -6,13 +6,13 @@ from libs.garchfx import fxforecast
 
 # Constants
 FORECASTS = 1000
-TICKER = 'TSLA'
+TICKER = input("Enter ticker: ")
 
 # Defining variables of this GARCH implementation
 # SCALE controls the volatility wiggliness, i.e. volatility of volatility
 # SCALE → 0 => Volatility models closer to GARCH volatility, OR the long term variance 
 # SCALE → 1 (or infinity) => Heavy volatility spikes are observed
-# SCALE = 1e-3 seems ideal
+# SCALE = 1e-3 to 5e-3 seems ideal (1e-2 for rough)
 SCALE = 3e-3
 
 # DELTA is the regime shift variable. 
@@ -33,6 +33,7 @@ logReturns *= 100
 VOLATILITY, PARAMS = getGARCHdata(logReturns)
 
 # Heston forecast
+# Computing GARCH parameters and passing into Heston for fair comparison
 speed = 1 - PARAMS[1] - PARAMS[2]
 variance = PARAMS[0]/speed
 hestonforecast = heston(speed, variance, VOLATILITY**2)
@@ -41,14 +42,14 @@ hestonforecast = heston(speed, variance, VOLATILITY**2)
 GARCHforecast = 100 * garchforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS)
 
 # GARCH-FX stochastic forecasting extension in percentages
-FXforecast = 100 * fxforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS, delta=DELTA, theta=SCALE)
+FXforecast = 100 * fxforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS, delta=DELTA, theta=SCALE, reg=True)
 
 # Plotting Values
-plt.plot(realizedVolatility, label="Realized Vol.")
+plt.plot(realizedVolatility, label="Realized Volatility")
 plt.plot(GARCHforecast, label="GARCH", linewidth=3)
-plt.plot(FXforecast, label=f"GARCH-FX @ {SCALE}", alpha=0.8)
-plt.plot(hestonforecast, label="Heston", alpha=0.8)
-plt.title(f"{TICKER} - GARCH forecast vs GARCH-FX")
+plt.plot(FXforecast, label=f"GARCH-FX (θ = {SCALE})", alpha=0.8)
+plt.plot(hestonforecast, label="Heston (σ = 0.6)", alpha=0.8)
+plt.title(f"{TICKER} Daily Volatility Forecasts: Comparison of GARCH, GARCH-FX and Heston Models")
 plt.xlabel("Forecasted Days")
 plt.ylabel("Daily Volatility (%)")
 plt.legend()
