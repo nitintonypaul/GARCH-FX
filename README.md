@@ -88,7 +88,8 @@ Enable Regime Shifting (Y/N): y
 RMSE (GARCH-FX to Realized Volatility): 0.24490
 RMSE (Heston to Realized Volatility): 0.26849
 ```
-[BRKB](assets/brkb.png)
+
+![BRKB](assets/brkb.png)
 
 ### 2. Procter & Gamble Co
 
@@ -99,7 +100,7 @@ RMSE (GARCH-FX to Realized Volatility): 0.20961
 RMSE (Heston to Realized Volatility): 0.27516
 ```
 
-[PG](assets/pg.png)
+![PG](assets/pg.png)
 
 ### 3. Coca-Cola Co
 
@@ -109,7 +110,8 @@ Enable Regime Shifting (Y/N): y
 RMSE (GARCH-FX to Realized Volatility): 0.21125
 RMSE (Heston to Realized Volatility): 0.39119
 ```
-[KO](assets/ko.png)
+
+![KO](assets/ko.png)
 
 ---
 
