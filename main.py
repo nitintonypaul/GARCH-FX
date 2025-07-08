@@ -54,12 +54,12 @@ logReturns *= 100
 VOLATILITY, PARAMS = getGARCHdata(logReturns)
 
 # Forecasting using GARCH-FX with or without regime shifting
-FXforecast = 100 * fxforecast(VOLATILITY, nahead=horizon, params=PARAMS, theta=THETA, reg=regimesh, regimeStates=probabilityArray, regimes=regimes)
+FXforecast = fxforecast(VOLATILITY, nahead=horizon, params=PARAMS, theta=THETA, reg=regimesh, regimeStates=probabilityArray, regimes=regimes)
 
 # Obtaining GARCH forecast if garchcomp is True
 # default is True for demonstration purposes
 if garchcomp:
-    GARCHforecast = 100 * garchforecast(VOLATILITY, nahead=horizon, params=PARAMS)
+    GARCHforecast = garchforecast(VOLATILITY, nahead=horizon, params=PARAMS)
     plt.plot(GARCHforecast, label="GARCH forecast", alpha=0.8, linewidth=3)
 
 # Forecasting summary
