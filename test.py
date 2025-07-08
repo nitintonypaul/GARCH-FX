@@ -1,6 +1,7 @@
 import numpy as np
 import yfinance as yf
 import matplotlib.pyplot as plt
+from tabulate import tabulate
 from libs.utils import garchforecast, getGARCHdata, realVol, hestonForecast
 from libs.garchfx import fxforecast
 
@@ -35,28 +36,49 @@ VOLATILITY, PARAMS = getGARCHdata(logReturns)
 
 # Heston forecast
 # Computing GARCH parameters and passing into Heston for fair comparison
-speed = 1 - PARAMS[1] - PARAMS[2]
-variance = PARAMS[0]/speed
+speed = 1 - PARAMS[0] - PARAMS[1]
+variance = PARAMS[2]/speed
 hestonforecast = hestonForecast(speed, variance, VOLATILITY**2)
 
 # manual GARCH to forecast in percentages
-GARCHforecast = 100 * garchforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS)
+GARCHforecast = garchforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS)
 
 # GARCH-FX stochastic forecasting extension in percentages
-FXforecast = 100 * fxforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS, theta=THETA)
+FXforecast = fxforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS, theta=THETA)
 
 # Root Mean Squared Error
-rmse = np.sqrt(np.mean((FXforecast - realizedVolatility) ** 2))
-print(f"RMSE (GARCH-FX to Realized Volatility): {rmse:.5f}")
+rmseFX = np.sqrt(np.mean((FXforecast - realizedVolatility) ** 2))
+rmseHESTON = np.sqrt(np.mean((hestonforecast - realizedVolatility) ** 2))
 
-rmse = np.sqrt(np.mean((hestonforecast - realizedVolatility) ** 2))
-print(f"RMSE (Heston to Realized Volatility): {rmse:.5f}")
+# Mean absolute error
+maeFX = np.mean(np.abs(FXforecast - realizedVolatility))
+maeHESTON = np.mean(np.abs(hestonforecast - realizedVolatility))
+
+# Printing parameters
+print("\nGARCH-FX Parameters:")
+print(tabulate(
+    [["Omega", PARAMS[2]],
+     ["Alpha", PARAMS[0]],
+     ["Beta", PARAMS[1]]],
+     headers=[],
+     tablefmt="plain"
+))
+
+# Summary table
+summary = [
+    ["GARCH-FX", f"{rmseFX:.5f}", f"{maeFX:.5f}", f"{np.mean(FXforecast):.3f}%"],
+    ["Heston", f"{rmseHESTON:.5f}", f"{maeHESTON:.5f}", f"{np.mean(hestonforecast):.3f}%"],
+    ["Realized Vol.", f"-", f"-", f"{np.mean(realizedVolatility):.3f}%"]
+]
+
+# Displaying summary
+print("\n" + tabulate(summary, headers=["Model", "RMSE", "MAE", "Mean Vol."], tablefmt="plain") + "\n")
 
 # Plotting Values
 plt.plot(realizedVolatility, label="Realized Volatility", alpha=0.8)
 plt.plot(GARCHforecast, label="GARCH", linewidth=3, alpha=0.8)
 plt.plot(FXforecast, label=f"GARCH-FX (θ = {THETA})")
-plt.plot(hestonforecast, label="Heston (σ = 0.4)", alpha=0.8)
+plt.plot(hestonforecast, label="Heston (σ = 0.45)", alpha=0.8)
 plt.title(f"{TICKER} Daily Volatility Forecasts: Comparison of GARCH, GARCH-FX and Heston Models")
 plt.xlabel("Forecasted Days")
 plt.ylabel("Daily Volatility (%)")

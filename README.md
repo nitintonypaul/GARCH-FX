@@ -80,38 +80,62 @@ This framework ensures that while GARCH-FX respects the foundational GARCH mecha
 
 GARCH-FX was benchmarked against Realized Volatility, vanilla GARCH and Heston.
 
-### 1. Berkshire Hathaway Inc Class B
+### 1. Amazon.com Inc
 
 ```shell
-Enter Ticker: BRK-B
-Enable Regime Shifting (Y/N): y
-RMSE (GARCH-FX to Realized Volatility): 0.24490
-RMSE (Heston to Realized Volatility): 0.26849
+Enter Ticker: AMZN
+Enable Regime Shifting (Y/N): Y
+
+GARCH-FX Parameters:
+Omega  0.0418616
+Alpha  0.0248063
+Beta   0.96785
+
+Model          RMSE     MAE      Mean Vol.
+GARCH-FX       0.70919  0.63282  2.329%
+Heston         0.72417  0.54988  1.862%
+Realized Vol.  -        -        2.177%
 ```
 
-![BRKB](assets/brkb.png)
+![BRKB](assets/amzn.png)
 
-### 2. Procter & Gamble Co
+### 2. Apple Inc
 
 ```shell
-Enter Ticker: PG
-Enable Regime Shifting (Y/N): y
-RMSE (GARCH-FX to Realized Volatility): 0.20961
-RMSE (Heston to Realized Volatility): 0.27516
+Enter Ticker: AAPL
+Enable Regime Shifting (Y/N): Y
+
+GARCH-FX Parameters:
+Omega  0.0653522
+Alpha  0.0638809
+Beta   0.917429
+
+Model          RMSE     MAE      Mean Vol.
+GARCH-FX       0.43895  0.38509  1.867%
+Heston         0.40209  0.34980  1.778%
+Realized Vol.  -        -        1.674%
 ```
 
-![PG](assets/pg.png)
+![PG](assets/aapl.png)
 
-### 3. Coca-Cola Co
+### 3. Meta Platforms Inc
 
 ```shell
-Enter Ticker: KO
-Enable Regime Shifting (Y/N): y
-RMSE (GARCH-FX to Realized Volatility): 0.21125
-RMSE (Heston to Realized Volatility): 0.39119
+Enter Ticker: META
+Enable Regime Shifting (Y/N): Y
+
+GARCH-FX Parameters:
+Omega  0.121083
+Alpha  0.0208854
+Beta   0.960266
+
+Model          RMSE     MAE      Mean Vol.
+GARCH-FX       0.78979  0.66586  2.580%
+Heston         0.87567  0.77790  2.657%
+Realized Vol.  -        -        2.736%
 ```
 
-![KO](assets/ko.png)
+![KO](assets/meta.png)
 
 ---
 

@@ -9,10 +9,10 @@ GLOBAL_SEED = None
 def garchforecast(volatility, nahead, params):
     
     GARCHforecasts = []
-    GARCHforecasts.append(volatility / 100)
+    GARCHforecasts.append(volatility)
     previousVariance = volatility ** 2
 
-    OMEGA, ALPHA, BETA = params[0], params[1], params[2]
+    ALPHA, BETA, OMEGA = params[0], params[1], params[2]
     for i in range(nahead-1):
 
         # GARCH equation
@@ -20,7 +20,7 @@ def garchforecast(volatility, nahead, params):
         previousVariance = newVariance
 
         # Appending GARCH volatility
-        GARCHforecasts.append(np.sqrt(previousVariance) / 100)
+        GARCHforecasts.append(np.sqrt(previousVariance))
     
     return np.array(GARCHforecasts)
 
@@ -54,7 +54,7 @@ def realVol(returns, steps):
 def hestonForecast(kappa, theta, v0):
 
     # Some predefined constants
-    sigma = 0.4
+    sigma = 0.45
     T = 2.75
     N = 1000
 

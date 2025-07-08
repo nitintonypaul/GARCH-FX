@@ -56,9 +56,9 @@ def fxforecast(volatility, nahead, params, theta, reg=False, regimeStates=None, 
 
     # Assigning variables and forecast list
     forecasts = []
-    forecasts.append(volatility / 100)
+    forecasts.append(volatility)
     previousVariance = volatility ** 2
-    OMEGA, ALPHA, BETA = params[0], params[1], params[2]
+    ALPHA, BETA, OMEGA = params[0], params[1], params[2]
     np.random.seed(GLOBAL_SEED)
 
     for i in range(nahead-1):
@@ -79,6 +79,6 @@ def fxforecast(volatility, nahead, params, theta, reg=False, regimeStates=None, 
         previousVariance = forecastedVariance
 
         # Appending GARCH-FX volatility
-        forecasts.append(np.sqrt(previousVariance) / 100)
+        forecasts.append(np.sqrt(previousVariance))
 
     return np.array(forecasts)
