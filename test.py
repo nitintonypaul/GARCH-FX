@@ -2,6 +2,7 @@ import numpy as np
 import yfinance as yf
 import matplotlib.pyplot as plt
 from tabulate import tabulate
+
 from libs.utils import garchforecast, getGARCHdata, realVol, hestonForecast
 from libs.garchfx import fxforecast
 
@@ -19,8 +20,8 @@ THETA = 3e-3
 
 # DELTA is the regime shift variable. 
 # D = 1 normal market mean. 
-# D > 1 => highly volatile regime. (1.2)
-# D < 1 => unusually calm regime. (0.8)
+# D > 1 => highly volatile regime. (1.5)
+# D < 1 => unusually calm regime. (0.5)
 DELTA = 1
 
 # Fetching data using yfinance
