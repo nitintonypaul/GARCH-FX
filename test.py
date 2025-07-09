@@ -16,7 +16,7 @@ regime = True if input("Enable Regime Shifting (Y/N): ").lower() == "y" else Fal
 # SCALE → 0 => Volatility models closer to GARCH volatility, i.e. the long term variance 
 # SCALE → 1 (or infinity) => Heavy volatility spikes are observed
 # SCALE = 1e-3 to 5e-3 seems ideal (1e-2 for rough)
-THETA = 3e-3
+THETA = 1e-3
 
 # DELTA is the regime shift variable. 
 # D = 1 normal market mean. 
@@ -45,14 +45,16 @@ hestonforecast = hestonForecast(speed, variance, VOLATILITY**2)
 GARCHforecast = garchforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS)
 
 # GARCH-FX stochastic forecasting extension in percentages
-FXforecast = fxforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS, theta=THETA)
+FXforecast = fxforecast(VOLATILITY, nahead=FORECASTS, params=PARAMS, theta=THETA, reg=regime)
 
 # Root Mean Squared Error
 rmseFX = np.sqrt(np.mean((FXforecast - realizedVolatility) ** 2))
+rmseGARCH = np.sqrt(np.mean((GARCHforecast - realizedVolatility) ** 2))
 rmseHESTON = np.sqrt(np.mean((hestonforecast - realizedVolatility) ** 2))
 
 # Mean absolute error
 maeFX = np.mean(np.abs(FXforecast - realizedVolatility))
+maeGARCH = np.mean(np.abs(GARCHforecast - realizedVolatility))
 maeHESTON = np.mean(np.abs(hestonforecast - realizedVolatility))
 
 # Printing parameters
@@ -67,7 +69,8 @@ print(tabulate(
 
 # Summary table
 summary = [
-    ["GARCH-FX", f"{rmseFX:.5f}", f"{maeFX:.5f}", f"{np.mean(FXforecast):.3f}%"],
+    ["GARCH", f"{rmseGARCH:.5f}", f"{maeGARCH:.5f}", f"{np.mean(GARCHforecast):.3f}%"],
+    ["GARCH-FX (RA)", f"{rmseFX:.5f}", f"{maeFX:.5f}", f"{np.mean(FXforecast):.3f}%"],
     ["Heston", f"{rmseHESTON:.5f}", f"{maeHESTON:.5f}", f"{np.mean(hestonforecast):.3f}%"],
     ["Realized Vol.", f"-", f"-", f"{np.mean(realizedVolatility):.3f}%"]
 ]
@@ -78,11 +81,12 @@ print("\n" + tabulate(summary, headers=["Model", "RMSE", "MAE", "Mean Vol."], ta
 # Plotting Values
 plt.plot(realizedVolatility, label="Realized Volatility", alpha=0.8)
 plt.plot(GARCHforecast, label="GARCH", linewidth=3, alpha=0.8)
-plt.plot(FXforecast, label=f"GARCH-FX (θ = {THETA})")
-plt.plot(hestonforecast, label="Heston (σ = 0.45)", alpha=0.8)
+plt.plot(FXforecast, label=f"GARCH-FX - RA (θ = {THETA})")
+plt.plot(hestonforecast, label="Heston (σ = 0.6)", alpha=0.8)
 plt.title(f"{TICKER} Daily Volatility Forecasts: Comparison of GARCH, GARCH-FX and Heston Models")
 plt.xlabel("Forecasted Days")
 plt.ylabel("Daily Volatility (%)")
 plt.legend()
 plt.grid(True)
 plt.show()
+plt.close()

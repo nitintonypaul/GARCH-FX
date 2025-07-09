@@ -54,7 +54,7 @@ def realVol(returns, steps):
 def hestonForecast(kappa, theta, v0):
 
     # Some predefined constants
-    sigma = 0.45
+    sigma = 0.6
     T = 2.75
     N = 1000
 

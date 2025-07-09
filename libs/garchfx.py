@@ -5,33 +5,22 @@
 import numpy as np
 import sys
 
-GLOBAL_SEED = None
+# Global seed for comparison
+GLOBAL_SEED = 100
 
 # Regime switching function
 def regimeswitcher(delta, regimeStates, regimes):
-    
+
     # Basic static Markov chain of probabilities per regime
     if regimeStates == None:
         
         # 3 stage regime probabilities
-        # regimeStates = np.array([[0.97, 0.029, 0.001], [0.015, 0.95, 0.035], [0.00, 0.04, 0.96]])
-
-        # 9 stage regime probabilities (DEFAULT)
-        regimeStates = np.array([
-            [0.500, 0.500, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000], # S1: Unusually Calm
-            [0.005, 0.960, 0.035, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000], # S2: Calm
-            [0.000, 0.015, 0.950, 0.035, 0.000, 0.000, 0.000, 0.000, 0.000], # S3: Calm
-            [0.000, 0.000, 0.020, 0.900, 0.080, 0.000, 0.000, 0.000, 0.000], # S4: Minor Down-Shift
-            [0.000, 0.000, 0.000, 0.010, 0.980, 0.010, 0.000, 0.000, 0.000], # S5: Normal
-            [0.000, 0.000, 0.000, 0.000, 0.080, 0.900, 0.020, 0.000, 0.000], # S6: Minor Up-Shift
-            [0.000, 0.000, 0.000, 0.000, 0.000, 0.035, 0.950, 0.015, 0.000], # S7: High Vol
-            [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.045, 0.950, 0.005], # S8: High Vol
-            [0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.000, 0.100, 0.900]  # S9: Crisis
-        ])
+        # Default
+        regimeStates = np.array([[0.97, 0.029, 0.001], [0.015, 0.95, 0.035], [0.00, 0.04, 0.96]])
     
     if regimes == None:
         # Regime multiplier values
-        regimes = [0.2, 0.4, 0.5, 0.8, 1.0, 1.2, 1.5, 1.6, 3]
+        regimes = [0.5, 1.0, 1.5]
     
     if len(regimeStates) != len(regimes):
         print("Invalid regime input")
