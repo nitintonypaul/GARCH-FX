@@ -76,6 +76,95 @@ This framework ensures that while GARCH-FX respects the foundational GARCH mecha
 
 ---
 
+# Installation
+
+This guide will walk you through setting up the project on your local machine.
+
+## Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+* **Git**: For cloning the repository.
+* **Python 3**: The project is built with Python. It's recommended to use Python 3.8 or newer.
+
+## Getting Started
+
+1.  **Clone or Download the Repository:**
+    You can obtain the project files by either cloning the repository using Git or downloading a ZIP archive.
+
+    * **Using Git (Recommended):**
+        ```bash
+        git clone https://github.com/nitintonypaul/GARCH-FX.git
+        ```
+
+    * **Downloading a ZIP:**
+        Go to the GitHub repository page, click the green "Code" button, and select "Download ZIP." Unzip the downloaded file to your desired location.
+
+2.  **Navigate to the Project Directory:**
+    Open your terminal or command prompt and change your current directory to the newly cloned or unzipped project folder.
+
+    ```bash
+    cd GARCH-FX
+    ```
+
+3.  **Install Dependencies:**
+    It's highly recommended to use a **virtual environment** to manage project dependencies. This prevents conflicts with other Python projects on your system.
+
+    * **Create a virtual environment (if you don't have one):**
+        ```bash
+        python -m venv venv
+        ```
+    * **Activate the virtual environment:**
+        * **On macOS/Linux:**
+            ```bash
+            source venv/bin/activate
+            ```
+        * **On Windows:**
+            ```bash
+            .\venv\Scripts\activate
+            ```
+    * **Install the required packages:**
+        ```bash
+        pip install -r requirements.txt
+        ```
+
+## Running the Project
+
+Once the dependencies are installed, you can either run a backtest or use the forecasting model.
+
+### Running a Backtest
+
+To run a backtest using the `test.py` script:
+
+```bash
+python test.py
+```
+
+### Running the Forecasting Model
+
+To run the forecasting model using the `main.py` script, you'll need to provide several arguments.
+
+#### Arguments for `main.py`:
+
+* `--ticker <TICKER_SYMBOL>`: **(Required)** The stock ticker symbol for which to perform the forecast (e.g., `AAPL`, `MSFT`).
+* `--train <TRAINING_PERIOD_DAYS>`: **(Required)** The model training period in days (e.g., `1000` or above is recommended).
+* `--horizon <FORECAST_HORIZON_DAYS>`: **(Required)** The model forecast horizon in days (e.g., `30`).
+* `--theta <VALUE>`: (Optional) The theta variable for forecasting. Defaults to `1e-3`. Higher values increases jaggedness of the forecast.
+* `--garchcomp`: (Optional) If included, the model will compare with a standard GARCH model. Defaults to `True`.
+* `--reg`: (Optional) Enables regime switching. Defaults to `False`.
+* `--customreg`: (Optional) If included, allows you to enter a custom regime matrix and regime state values. Defaults to `False`.
+* `--help`: To display help.
+
+#### Example Usage:
+
+Here's an example of how to run the `main.py` script:
+
+```bash
+python main.py --ticker MSFT --train 1000 --horizon 60 --theta 0.005 --reg
+```
+
+This command would forecast `MSFT`'s movement, training on 1000 days of data and forecasting 60 days into the future, with a custom theta value and enabling both GARCH comparison and regime switching.
+
 ## Benchmarks
 
 GARCH-FX was benchmarked against Realized Volatility, vanilla GARCH and Heston.
