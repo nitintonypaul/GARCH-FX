@@ -211,8 +211,7 @@ Realized Vol.  -        -        1.675%
 
 ![AAPL](assets/aapl.png)
 
-### 3. 
-Procter & Gamble Co
+### 3. Procter & Gamble Co
 
 ```shell
 Enter Ticker: PG
