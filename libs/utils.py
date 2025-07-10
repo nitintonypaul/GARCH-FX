@@ -51,10 +51,9 @@ def realVol(returns, steps):
     return np.delete(volarr, 0)
 
 # Heston model function to forecast volatility
-def hestonForecast(kappa, theta, v0):
+def hestonforecast(kappa, theta, v0, sigma):
 
-    # Some predefined constants
-    sigma = 0.6
+    # Time
     T = 2.75
     N = 1000
 

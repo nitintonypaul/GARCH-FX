@@ -169,62 +169,69 @@ This command would forecast `MSFT`'s movement, training on 1000 days of data and
 
 GARCH-FX was benchmarked against Realized Volatility, vanilla GARCH and Heston.
 
-### 1. Amazon.com Inc
+### 1. NVIDIA Corp
 
 ```shell
-Enter Ticker: AMZN
-Enable Regime Shifting (Y/N): Y
+Enter Ticker: NVDA
+Enable Regime Shifting (Y/N): N
+Enter Vol of Vol. (Heston): 1
 
 GARCH-FX Parameters:
-Omega  0.0418616
-Alpha  0.0248063
-Beta   0.96785
+Omega  0.229856
+Alpha  0.049683
+Beta   0.931876
 
 Model          RMSE     MAE      Mean Vol.
-GARCH-FX       0.70919  0.63282  2.329%
-Heston         0.72417  0.54988  1.862%
-Realized Vol.  -        -        2.177%
+GARCH          0.47978  0.38978  3.477%
+Heston         0.52634  0.43119  3.461%
+GARCH-FX       0.51101  0.42174  3.544%
+Realized Vol.  -        -        3.320%
 ```
 
-![BRKB](assets/amzn.png)
+![NVDA](assets/NVDA.png)
 
 ### 2. Apple Inc
 
 ```shell
 Enter Ticker: AAPL
-Enable Regime Shifting (Y/N): Y
+Enable Regime Shifting (Y/N): N
+Enter Vol of Vol. (Heston): 0.55
 
 GARCH-FX Parameters:
-Omega  0.0653522
-Alpha  0.0638809
-Beta   0.917429
+Omega  0.0665797
+Alpha  0.0651289
+Beta   0.915837
 
 Model          RMSE     MAE      Mean Vol.
-GARCH-FX       0.43895  0.38509  1.867%
-Heston         0.40209  0.34980  1.778%
-Realized Vol.  -        -        1.674%
+GARCH          0.40359  0.36471  1.848%
+Heston         0.44048  0.38695  1.863%
+GARCH-FX       0.43658  0.38485  1.894%
+Realized Vol.  -        -        1.675%
 ```
 
-![PG](assets/aapl.png)
+![AAPL](assets/AAPL.png)
 
-### 3. Meta Platforms Inc
+### 3. 
+Procter & Gamble Co
 
 ```shell
-Enter Ticker: META
-Enable Regime Shifting (Y/N): Y
+Enter Ticker: PG
+Enable Regime Shifting (Y/N): N
+Enter Vol of Vol. (Heston): 0.25
 
 GARCH-FX Parameters:
-Omega  0.121083
-Alpha  0.0208854
-Beta   0.960266
+Omega  0.0203721
+Alpha  0.0334487
+Beta   0.951174
 
 Model          RMSE     MAE      Mean Vol.
-GARCH-FX       0.78979  0.66586  2.580%
-Heston         0.87567  0.77790  2.657%
-Realized Vol.  -        -        2.736%
+GARCH          0.21603  0.19726  1.145%
+Heston         0.23264  0.20866  1.185%
+GARCH-FX       0.21310  0.19427  1.140%
+Realized Vol.  -        -        1.062%
 ```
 
-![KO](assets/meta.png)
+![PG](assets/PG.png)
 
 ---
 

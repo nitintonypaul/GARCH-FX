@@ -6,7 +6,7 @@ import numpy as np
 import sys
 
 # Global seed for comparison
-GLOBAL_SEED = 100
+GLOBAL_SEED = None
 
 # Regime switching function
 def regimeswitcher(delta, regimeStates, regimes):
@@ -16,11 +16,18 @@ def regimeswitcher(delta, regimeStates, regimes):
         
         # 3 stage regime probabilities
         # Default
-        regimeStates = np.array([[0.97, 0.029, 0.001], [0.015, 0.95, 0.035], [0.00, 0.04, 0.96]])
+        regimeStates = np.array([
+            [0.85, 0.12, 0.03, 0.00, 0.00],  
+            [0.05, 0.75, 0.18, 0.02, 0.00],  
+            [0.01, 0.10, 0.70, 0.17, 0.02],  
+            [0.00, 0.02, 0.15, 0.70, 0.13],  
+            [0.00, 0.00, 0.03, 0.10, 0.87],  
+        ])
     
     if regimes == None:
+        
         # Regime multiplier values
-        regimes = [0.5, 1.0, 1.5]
+        regimes = [0.5, 0.9, 1.0, 1.1, 1.5]
     
     if len(regimeStates) != len(regimes):
         print("Invalid regime input")
@@ -48,10 +55,11 @@ def fxforecast(volatility, nahead, params, theta, reg=False, regimeStates=None, 
     forecasts.append(volatility)
     previousVariance = volatility ** 2
     ALPHA, BETA, OMEGA = params[0], params[1], params[2]
+    PERSISTANCE = ALPHA + BETA
     np.random.seed(GLOBAL_SEED)
 
     for i in range(nahead-1):
-        
+
         # Modelling shape to fit variance as the mode
         SHAPE = (previousVariance / theta) + 1
 
@@ -64,7 +72,7 @@ def fxforecast(volatility, nahead, params, theta, reg=False, regimeStates=None, 
         stochasticVariance = np.random.gamma(shape=SHAPE, scale=theta, size=1)[0]
 
         # GARCH-FX equation
-        forecastedVariance = (OMEGA * delta) + (ALPHA + BETA) * stochasticVariance
+        forecastedVariance = (OMEGA * delta) + (PERSISTANCE) * stochasticVariance
         previousVariance = forecastedVariance
 
         # Appending GARCH-FX volatility
