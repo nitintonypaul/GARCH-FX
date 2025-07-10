@@ -209,7 +209,7 @@ GARCH-FX       0.43658  0.38485  1.894%
 Realized Vol.  -        -        1.675%
 ```
 
-![AAPL](assets/AAPL.png)
+![AAPL](assets/aapl.png)
 
 ### 3. 
 Procter & Gamble Co
