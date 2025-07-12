@@ -4,6 +4,12 @@ A stochastic, regime-aware extension of traditional GARCH volatility forecasting
 
 ---
 
+Refer to the preprints for deeper insights and benchmarks.
+
+[MPRA](https://mpra.ub.uni-muenchen.de/125321/)
+
+---
+
 ## Overview 
 
 **GARCH-FX**, or GARCH Forecasting eXtension, is an experimental and novel augmentation of the classic **GARCH(1,1)** model. While traditional GARCH models are robust, they often struggle to accurately capture the jagged, noisy behavior of realized volatility over longer horizons. This is because GARCH forecasts for long-term volatility tend to flatline, driven by parameters $$(\alpha, \beta, \omega)$$ that are trained on a specific historical window. Even though traditional GARCH models excel at precisely modeling the long-term mean variance (or average volatility) within that training period, their predictive power for extended future periods can be limited by this inherent smoothing.
