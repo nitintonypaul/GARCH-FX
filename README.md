@@ -6,7 +6,8 @@ A stochastic, regime-aware extension of traditional GARCH volatility forecasting
 
 ### Refer preprints for deeper insights and benchmarks.
 
-[MPRA](https://mpra.ub.uni-muenchen.de/125321/)
+- [MPRA](https://mpra.ub.uni-muenchen.de/125321/)
+- [SSRN](https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5345734)
 
 ---
 
